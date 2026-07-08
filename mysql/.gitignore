@@ -1,0 +1,5 @@
+# MySQL 런타임 데이터 / 로그 (인증서 키 포함, 커밋 금지)
+data/
+logs/
+
+.DS_Store

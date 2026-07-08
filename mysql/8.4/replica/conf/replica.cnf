@@ -1,0 +1,29 @@
+[mysqld]
+## 서버 ID
+server-id=2
+## relay log replica는 master binlog를 네트워크로 받아 먼저 릴레이 로그에 저장 후 그 다음 읽어서 자기 DB에 저장
+relay-log=relay-bin
+
+log-error=/var/log/mysql/error.log
+
+## 슬로우 쿼리 로그
+slow_query_log=ON
+slow_query_log_file=/var/log/mysql/slow.log
+## 1초 이상 걸린 쿼리 기록
+long_query_time=1
+
+## GTID master와 동일하게
+gtid-mode=ON
+enforce-gtid-consistency=ON
+## 일반 사용자 계정에서 쓰기를 막음 replica는 읽기전용
+read-only=ON
+super-read-only=ON
+
+## 안정성/복구
+relay-log-recovery=ON       # 재시작 시 릴레이로그 손상 자동 복구
+#skip-replica-start=ON       # 부팅 시 자동 복제 시작 안 함(설정 후 수동 START)
+
+## SET GLOBAL super_read_only = ON;
+##-- 복제 연결 완료 후 실행
+## SET PERSIST super_read_only = ON;
+## SET PERSIST read_only = ON;

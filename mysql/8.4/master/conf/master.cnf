@@ -1,0 +1,22 @@
+[mysqld]
+## 서버 ID
+server-id=1
+## 바이너리 로그
+log-bin=mysql-bin
+## 에러로그
+log-error=/var/log/mysql/error.log
+
+## 슬로우 쿼리 로그
+slow_query_log=ON
+slow_query_log_file=/var/log/mysql/slow.log
+## 1초 이상 걸린 쿼리 기록
+long_query_time=1
+
+## binlog_format : 로그 기록 방식 STATEMENT: 실제로 SQL 문 자체 기록, ROW: 실제로 바뀐 값 기록, MIXED: 상황에 따라 혼용
+binlog_format=ROW
+## GTID(Global Transaction Identifier) 기반 복제
+gtid-mode=ON
+## GTID로 안전하게 복제되지 못하는 종류의 SQL을 막을지
+enforce-gtid-consistency=ON
+## 어느 네트워크 인터페이스에서 연결을 받을지
+bind-address=0.0.0.0

@@ -1,0 +1,28 @@
+services:
+  mysql-replica:
+    image: mysql:8.4
+    container_name: mysql-replica
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      TZ: UTC
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./conf/replica.cnf:/etc/mysql/conf.d/replica.cnf:ro
+      - ./logs:/var/log/mysql 
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mysql-repl-net
+
+networks:
+  mysql-repl-net:
+    external: true
